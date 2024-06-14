@@ -5,7 +5,7 @@ EMMETT / MrPickles5:
     * Literally no one under the age of 35 is good at it, I'm working on it too.
     * Being on the dishing-out side is new to me.
     * I promise there is 0% malice or condescension, if you feel any of that then I need to do a better job.
-- The two areas of critique I have for you are in regards to the Python, not what you're doing with it (i.e. SYNTAX/SEMANTICS vs. LOGIC)
+- The two areas of critique I have for you are in regards to the Python, not what you're doing with it
 - My biggest worry for you looking through your codebase as a Python programmer is you not following industry standards in regards to structuring your project.
     * This can be sending a bad signal to potential employers or anyone who looks through your GitHub.
     * Theres reasons why things are done certain ways, if you ignore these methods it heavily implies you do not understand why things are done.
@@ -15,13 +15,15 @@ EMMETT / MrPickles5:
 ! Go on Hacker News and look at any links that start with "Show HN:", many are Python and will teach you A LOT !
 ! Hacker News: https://news.ycombinator.com/ !
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 BETTER DOCUMENTATION
     - This will mostly consist of comments above lines of code that are not abundantly clear, and definetly keep in mind: !!!!! no one is in your head !!!!!
     - Readable code is way more impressive than clever code / shorter code
         * It indicates you understand how development actually works (collaboratively)
-        * It shows you are not being some smarmy show off (which was me for a while with clever code)
+        * It shows you are not being some smarmy show off (which was me for a while with overly clever code)
         * It's annoying, but make variable names longer; use text editor shortcuts if you dont want to type but they need to be clearer.
-        * Programming languages are quite optimized, varaible name length has literally 0 effect on run time or memory
+        * Programming languages are quite optimized, varaible name length has literally no effect on run time or memory
         * Heres an example of something I had an issue with:
 
             #Federal Reserve Bank of St. Louis API to use current 10-Year Treasury as Risk-Free Rate
@@ -29,18 +31,41 @@ BETTER DOCUMENTATION
             # rf = (fred.get_series_latest_release('GS10') / 100).iloc[-1]
             rf = 0.0421
 
-        * First off, why the commented out API and instead a manual declaration, similar to excel you dont want to hard code values like this unless you have to.
+        * First off, why the commented out API and instead a manual declaration, similar to excel you dont want to hard code values like this unless you need to.
         * If you cant get the API to work and need to just set it manually, don't make it abundantly obvious you couldn't get the API to work (delete the code, don't comment it out).
 
         * More importantly, at least rename it: `rf_rate = 0.0421` or even better: `risk_free_rate = 0.0421`
-        * `rf` is not an industry accepted shorthand the way `df` is for a pandas DataFrame (and you should even be careful having df all over the place, it's better to have `df_risk_free`, for example)
+        * `rf` is not an industry accepted shorthand the way `df` is for a pandas DataFrame (and you should even be careful having `df` all over the place, it's better to have `df_risk_free`, for example)
         * While you say what `rf` refers to in a comment the first time, you have `rf` in many places and it's pretty confusing.
-        * Honest to god my first thoughts were it is some sort of DataFrame, so in my head I was like "residual frame? reduced frame? retarded frame? risk frame?" before I just decided to scroll up and find it.
+        * My initial thoughts were if `rf` is some sort of DataFrame, so in my head I was like "residual frame? reduced frame? retarded frame? risk frame?" before I just decided to scroll up and find it.
 
     - If something is not EXPLICITLY clear, i.e. basic operation or very precise variable names, comment so others can understand.
     *****************************************************************************************
     - Python has an official method for explaining what a function or class will do, called docstrings, and they are incredibly simple and easy:
-        * Instead of commenting above a function with '#' and proceeding to do a little tiny synopsis, create a multi-line comment with """ """
+        * Instead of commenting above a function with '#' and proceeding to do a little tiny synopsis, create a multi-line comment with """ """ right underneath the function declaration:
+
+        def optimize(df: pd.DataFrame, tickers: list[str,...]) -> float:
+            """
+            Optimize a portfolio using the risk-free rate.
+            Uses a Portfolio object as defined in the Portfolio class
+            This is used for ....
+            Returns a float which represents ...
+            
+            ----------
+            Parameters
+            ----------
+        
+            df: pd.DataFrame
+                the returns of each ticker within a portfolio
+        
+            tickers: list[str]
+                the tickers to optimize the portfolio on based on risk-free rate and Sharpe Ratio
+            """
+            .
+            .
+            .
+            return
+
         * You will not be limited by having to fit your explanation in a single-line, tbh the more detailed/expressive you are about what you are trying to accomplish here means
             less comments you have to have throughout the function.
         * You can talk about the variables one can expect in this function and what their role is / type / original src
@@ -53,6 +78,7 @@ BETTER DOCUMENTATION
     *****************************************************************************************
     - Type hints are also considered documentation, so these would be good to work in as well.
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 CODE ORGANIZATION
     - Before anything else, almost always all code goes within src/, a directory for all source code, and usually there is a separate one for data/ as well as logs/ and testing/
